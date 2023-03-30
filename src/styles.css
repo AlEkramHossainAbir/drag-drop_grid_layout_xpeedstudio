@@ -111,3 +111,9 @@ body {
   flex-direction: column;
   margin-bottom: 100px;
 }
+
+.text_area{
+  width: 75%;
+  height: 50vh;
+  position: absolute;
+}

@@ -11,6 +11,7 @@ import initialData from "../lib/initial-data";
 import Row from "./Row";
 import SideBarItem from "./SideBarItem";
 import TrashDropZone from "./TrashDropZone";
+import TextArea from './TextArea'
 
 import shortid from "shortid";
 import {
@@ -38,6 +39,8 @@ const Container = () => {
     (dropZone, item) => {
       console.log("dropZone", dropZone);
       console.log("item", item);
+      console.log(layout);
+      alert(layout)
 
       const splitDropZonePath = dropZone.path.split("-");
       const pathToDropZone = splitDropZonePath.slice(0, -1).join("-");
@@ -50,25 +53,49 @@ const Container = () => {
       // sidebar into
       if (item.type === SIDEBAR_ITEM) {
         // 1. Move sidebar item into page
-        const newComponent = {
-          id: shortid.generate(),
-          ...item.component,
-        };
-        const newItem = {
-          id: newComponent.id,
-          type: COMPONENT,
-        };
-        setComponents({
-          ...components,
-          [newComponent.id]: newComponent,
-        });
-        setLayout(
-          handleMoveSidebarComponentIntoParent(
-            layout,
-            splitDropZonePath,
-            newItem
-          )
-        );
+       if (item.component.type === "row" || item.component.type === "column") {
+         const newComponent = {
+           id: "1",
+           ...item.component,
+         };
+         const newItem = {
+           id: newComponent.id,
+           type: COMPONENT,
+         };
+         setComponents({
+           ...components,
+           [newComponent.id]: newComponent,
+         });
+         setLayout(
+           handleMoveSidebarComponentIntoParent(
+             layout,
+             splitDropZonePath,
+             newItem
+           )
+         );
+       } 
+       
+       else {
+         const newComponent = {
+           id: shortid.generate(),
+           ...item.component,
+         };
+         const newItem = {
+           id: newComponent.id,
+           type: COMPONENT,
+         };
+         setComponents({
+           ...components,
+           [newComponent.id]: newComponent,
+         });
+         setLayout(
+           handleMoveSidebarComponentIntoParent(
+             layout,
+             splitDropZonePath,
+             newItem
+           )
+         );
+       }
         return;
       }
 
@@ -131,7 +158,8 @@ const Container = () => {
       <div className="sideBar">
         {Object.values(SIDEBAR_ITEMS).map((sideBarItem, index) => (
           <SideBarItem key={sideBarItem.id} data={sideBarItem} />
-        ))}
+        ))
+        }
       </div>
       <div className="pageContainer">
         <div className="page">
@@ -168,6 +196,7 @@ const Container = () => {
           }}
           onDrop={handleDropToTrashBin}
         />
+        <TextArea values={layout} />
       </div>
     </div>
   );

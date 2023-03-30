@@ -4,6 +4,7 @@ import { ROW } from "../lib/constants";
 import Column from "./Column";
 import DropZone from "./DropZone";
 
+
 const style = {};
 const Row = ({ data, components, handleDrop, path }) => {
   const ref = useRef(null);
