@@ -26,6 +26,8 @@ const Container = () => {
   const initialComponents = initialData.components;
   const [layout, setLayout] = useState(initialLayout);
   const [components, setComponents] = useState(initialComponents);
+  const [rowIndex, setRowIndex] = useState(0);
+  const [columnIndex, setColumnIndex] = useState(0);
 
   const handleDropToTrashBin = useCallback(
     (dropZone, item) => {
@@ -39,8 +41,24 @@ const Container = () => {
     (dropZone, item) => {
       console.log("dropZone", dropZone);
       console.log("item", item);
-      console.log(layout);
-      alert(layout)
+      let path = dropZone.path;
+      if(layout.length>0)
+      {
+          console.log(layout[rowIndex].children[columnIndex].id);
+
+      }
+  
+      if(path.length > 1){
+        let pathIndex = path.slice(-1, path.length);
+        setColumnIndex(pathIndex);  
+
+      }
+      else{
+        setRowIndex(path)
+
+      }
+ 
+      // alert(layout?.children?.id)
 
       const splitDropZonePath = dropZone.path.split("-");
       const pathToDropZone = splitDropZonePath.slice(0, -1).join("-");
@@ -145,6 +163,9 @@ const Container = () => {
         key={row.id}
         data={row}
         handleDrop={handleDrop}
+        layout={layout}
+        columnIndex={columnIndex}
+        rowIndex={rowIndex}
         components={components}
         path={currentPath}
       />
@@ -158,8 +179,7 @@ const Container = () => {
       <div className="sideBar">
         {Object.values(SIDEBAR_ITEMS).map((sideBarItem, index) => (
           <SideBarItem key={sideBarItem.id} data={sideBarItem} />
-        ))
-        }
+        ))}
       </div>
       <div className="pageContainer">
         <div className="page">
@@ -196,7 +216,7 @@ const Container = () => {
           }}
           onDrop={handleDropToTrashBin}
         />
-        <TextArea values={layout} />
+        <TextArea layout={layout} />
       </div>
     </div>
   );

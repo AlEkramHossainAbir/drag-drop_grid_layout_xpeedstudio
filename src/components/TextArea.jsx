@@ -1,10 +1,9 @@
 import React from "react";
-const TextArea = ({ values }) => {
-    
-  let text = JSON.stringify(values, null, '\t')
+const TextArea = ({ layout }) => {
+  let text = JSON.stringify(layout, null, "\t");
   return (
     <div>
-      <textarea value={text} className="text_area"/>
+      <textarea value={text} className="text_area" />
     </div>
   );
 };
