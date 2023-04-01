@@ -11,7 +11,7 @@ import initialData from "../lib/initial-data";
 import Row from "./Row";
 import SideBarItem from "./SideBarItem";
 import TrashDropZone from "./TrashDropZone";
-import TextArea from './TextArea'
+import TextArea from "./TextArea";
 
 import shortid from "shortid";
 import {
@@ -42,22 +42,13 @@ const Container = () => {
       console.log("dropZone", dropZone);
       console.log("item", item);
       let path = dropZone.path;
-      if(layout.length>0)
-      {
-          console.log(layout[rowIndex].children[columnIndex].id);
-
-      }
-  
-      if(path.length > 1){
+      if (path.length > 1) {
         let pathIndex = path.slice(-1, path.length);
-        setColumnIndex(pathIndex);  
-
+        setColumnIndex(pathIndex);
+      } else {
+        setRowIndex(path);
       }
-      else{
-        setRowIndex(path)
 
-      }
- 
       // alert(layout?.children?.id)
 
       const splitDropZonePath = dropZone.path.split("-");
@@ -71,49 +62,47 @@ const Container = () => {
       // sidebar into
       if (item.type === SIDEBAR_ITEM) {
         // 1. Move sidebar item into page
-       if (item.component.type === "row" || item.component.type === "column") {
-         const newComponent = {
-           id: "1",
-           ...item.component,
-         };
-         const newItem = {
-           id: newComponent.id,
-           type: COMPONENT,
-         };
-         setComponents({
-           ...components,
-           [newComponent.id]: newComponent,
-         });
-         setLayout(
-           handleMoveSidebarComponentIntoParent(
-             layout,
-             splitDropZonePath,
-             newItem
-           )
-         );
-       } 
-       
-       else {
-         const newComponent = {
-           id: shortid.generate(),
-           ...item.component,
-         };
-         const newItem = {
-           id: newComponent.id,
-           type: COMPONENT,
-         };
-         setComponents({
-           ...components,
-           [newComponent.id]: newComponent,
-         });
-         setLayout(
-           handleMoveSidebarComponentIntoParent(
-             layout,
-             splitDropZonePath,
-             newItem
-           )
-         );
-       }
+        if (item.component.type === "row" || item.component.type === "column") {
+          const newComponent = {
+            id: "1",
+            ...item.component,
+          };
+          const newItem = {
+            id: newComponent.id,
+            type: COMPONENT,
+          };
+          setComponents({
+            ...components,
+            [newComponent.id]: newComponent,
+          });
+          setLayout(
+            handleMoveSidebarComponentIntoParent(
+              layout,
+              splitDropZonePath,
+              newItem
+            )
+          );
+        } else {
+          const newComponent = {
+            id: shortid.generate(),
+            ...item.component,
+          };
+          const newItem = {
+            id: newComponent.id,
+            type: COMPONENT,
+          };
+          setComponents({
+            ...components,
+            [newComponent.id]: newComponent,
+          });
+          setLayout(
+            handleMoveSidebarComponentIntoParent(
+              layout,
+              splitDropZonePath,
+              newItem
+            )
+          );
+        }
         return;
       }
 
@@ -156,6 +145,10 @@ const Container = () => {
     },
     [layout, components]
   );
+  // if (layout.length > 0) {
+  //   console.log(layout.length);
+  //   console.log(layout[rowIndex].children[columnIndex].id);
+  // }
 
   const renderRow = (row, currentPath) => {
     return (
@@ -170,6 +163,7 @@ const Container = () => {
         path={currentPath}
       />
     );
+     
   };
 
   // dont use index for key when mapping over items
@@ -216,7 +210,7 @@ const Container = () => {
           }}
           onDrop={handleDropToTrashBin}
         />
-        <TextArea layout={layout} />
+        <TextArea layout={layout} rowIndex={rowIndex} columnIndex={columnIndex} />
       </div>
     </div>
   );
