@@ -15,8 +15,6 @@ const Row = ({
   path,
 }) => {
   const ref = useRef(null);
-  // console.log(rowIndex);
-  // console.log(columnIndex);
 
   const [{ isDragging }, drag] = useDrag({
     item: {

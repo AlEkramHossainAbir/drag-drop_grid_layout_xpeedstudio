@@ -4,7 +4,7 @@ const TextArea = ({ layout }) => {
   // console.log(layout.length);
   return (
     <div>
-      <textarea value={text} className="text_area" />
+      <textarea value={text} className="text_area" readOnly />
     </div>
   );
 };

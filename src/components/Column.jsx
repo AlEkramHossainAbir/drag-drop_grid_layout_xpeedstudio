@@ -7,18 +7,7 @@ import DropZone from "./DropZone";
 const style = {};
 const Column = ({ data,layout, components, handleDrop, path,showId }) => {
   const ref = useRef(null);
-  // console.log("Column Added");
-  // console.log(layout.length);
-  // let child = layout[0].children
-  // console.log(child.length);
-  // if(layout)
 
-    // var len = layout.length;
-    // for (let i = 0; i <= len; i++) {
-    //   if (i === len) {
-    //     console.log(layout[len - 1].children[0].id);
-    //   }
-    // }
 
   const [{ isDragging }, drag] = useDrag({
     item: {

@@ -58,27 +58,6 @@ const Container = () => {
       // sidebar into
       if (item.type === SIDEBAR_ITEM) {
         // 1. Move sidebar item into page
-        if (item.component.type === "row" || item.component.type === "column") {
-          const newComponent = {
-            id: "1",
-            ...item.component,
-          };
-          const newItem = {
-            id: newComponent.id,
-            type: COMPONENT,
-          };
-          setComponents({
-            ...components,
-            [newComponent.id]: newComponent,
-          });
-          setLayout(
-            handleMoveSidebarComponentIntoParent(
-              layout,
-              splitDropZonePath,
-              newItem
-            )
-          );
-        } else {
           const newComponent = {
             id: shortid.generate(),
             ...item.component,
@@ -98,7 +77,6 @@ const Container = () => {
               newItem
             )
           );
-        }
         return;
       }
 
