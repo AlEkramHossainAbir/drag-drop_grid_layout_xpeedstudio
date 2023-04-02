@@ -22,8 +22,8 @@ const Component = ({ data, components, path, showId }) => {
   drag(ref);
 
   const component = components[data.id];
-  
-   if (component.type != "row" && component.type != "column") {
+
+   if (component.type !== "row" && component.type !== "column") {
      return (
        <div
          ref={ref}
