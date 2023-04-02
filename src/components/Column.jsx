@@ -5,7 +5,7 @@ import Component from "./Component";
 import DropZone from "./DropZone";
 
 const style = {};
-const Column = ({ data,layout, components, handleDrop, path }) => {
+const Column = ({ data,layout, components, handleDrop, path,showId }) => {
   const ref = useRef(null);
   // console.log("Column Added");
   // console.log(layout.length);
@@ -42,6 +42,7 @@ const Column = ({ data,layout, components, handleDrop, path }) => {
         data={component}
         components={components}
         path={currentPath}
+        showId={showId}
       />
     );
   };
@@ -51,6 +52,7 @@ const Column = ({ data,layout, components, handleDrop, path }) => {
       ref={ref}
       style={{ ...style, opacity }}
       className="base draggable column"
+      onClick={(e)=>{showId(data.id,e);}}
     >
       {data.id}
       {data.children.map((component, index) => {

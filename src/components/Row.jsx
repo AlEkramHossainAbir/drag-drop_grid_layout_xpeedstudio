@@ -6,11 +6,17 @@ import DropZone from "./DropZone";
 
 
 const style = {};
-const Row = ({ data, components,rowIndex,columnIndex, layout, handleDrop, path }) => {
+const Row = ({
+  data,
+  components,
+  showId,
+  layout,
+  handleDrop,
+  path,
+}) => {
   const ref = useRef(null);
   // console.log(rowIndex);
   // console.log(columnIndex);
-
 
   const [{ isDragging }, drag] = useDrag({
     item: {
@@ -36,12 +42,20 @@ const Row = ({ data, components,rowIndex,columnIndex, layout, handleDrop, path }
         components={components}
         handleDrop={handleDrop}
         path={currentPath}
+        showId={showId}
       />
     );
   };
 
   return (
-    <div ref={ref} style={{ ...style, opacity }} className="base draggable row">
+    <div
+      ref={ref}
+      style={{ ...style, opacity }}
+      className="base draggable row"
+      onClick={(e) => {
+        showId(data.id, e);
+      }}
+    >
       {data.id}
       <div className="columns">
         {data.children.map((column, index) => {

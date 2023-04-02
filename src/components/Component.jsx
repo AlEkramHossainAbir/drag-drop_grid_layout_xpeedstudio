@@ -8,7 +8,7 @@ const style = {
   backgroundColor: "white",
   cursor: "move",
 };
-const Component = ({ data, components, path }) => {
+const Component = ({ data, components, path, showId }) => {
   const ref = useRef(null);
 
   const [{ isDragging }, drag] = useDrag({
@@ -28,6 +28,9 @@ const Component = ({ data, components, path }) => {
       ref={ref}
       style={{ ...style, opacity }}
       className="component draggable"
+      onClick={(e) => {
+        showId(data.id, e);
+      }}
     >
       <div>{data.id}</div>
       <div>{component.content}</div>

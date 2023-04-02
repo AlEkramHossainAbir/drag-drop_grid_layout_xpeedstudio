@@ -26,8 +26,12 @@ const Container = () => {
   const initialComponents = initialData.components;
   const [layout, setLayout] = useState(initialLayout);
   const [components, setComponents] = useState(initialComponents);
-  const [rowIndex, setRowIndex] = useState(0);
-  const [columnIndex, setColumnIndex] = useState(0);
+
+  // Show ID as pop up when click on them
+  const showId = (data,e) =>{
+      alert(data);
+      e.stopPropagation();
+  }
 
   const handleDropToTrashBin = useCallback(
     (dropZone, item) => {
@@ -41,15 +45,7 @@ const Container = () => {
     (dropZone, item) => {
       console.log("dropZone", dropZone);
       console.log("item", item);
-      let path = dropZone.path;
-      if (path.length > 1) {
-        let pathIndex = path.slice(-1, path.length);
-        setColumnIndex(pathIndex);
-      } else {
-        setRowIndex(path);
-      }
 
-      // alert(layout?.children?.id)
 
       const splitDropZonePath = dropZone.path.split("-");
       const pathToDropZone = splitDropZonePath.slice(0, -1).join("-");
@@ -145,10 +141,6 @@ const Container = () => {
     },
     [layout, components]
   );
-  // if (layout.length > 0) {
-  //   console.log(layout.length);
-  //   console.log(layout[rowIndex].children[columnIndex].id);
-  // }
 
   const renderRow = (row, currentPath) => {
     return (
@@ -157,10 +149,9 @@ const Container = () => {
         data={row}
         handleDrop={handleDrop}
         layout={layout}
-        columnIndex={columnIndex}
-        rowIndex={rowIndex}
         components={components}
         path={currentPath}
+        showId={showId}
       />
     );
      
@@ -210,7 +201,7 @@ const Container = () => {
           }}
           onDrop={handleDropToTrashBin}
         />
-        <TextArea layout={layout} rowIndex={rowIndex} columnIndex={columnIndex} />
+        <TextArea layout={layout} />
       </div>
     </div>
   );
