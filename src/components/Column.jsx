@@ -8,18 +8,17 @@ const style = {};
 const Column = ({ data,layout, components, handleDrop, path,showId }) => {
   const ref = useRef(null);
 
-
-  const [{ isDragging }, drag] = useDrag({
-    item: {
-      type: COLUMN,
-      id: data.id,
-      children: data.children,
-      path,
-    },
-    collect: (monitor) => ({
-      isDragging: monitor.isDragging(),
-    }),
-  });
+const [{ isDragging }, drag] = useDrag({
+  item: {
+    type: COLUMN,
+    id: data.id,
+    children: data.children,
+    path,
+  },
+  collect: (monitor) => ({
+    isDragging: monitor.isDragging(),
+  }),
+});
 
   const opacity = isDragging ? 0 : 1;
   drag(ref);
